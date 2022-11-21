@@ -31,8 +31,6 @@ cd azure-machine-learning-mlops-workshop/
 
 ## 敲黑板
 
-![Pipeline With Testing Drawing](../media/pipeline_overview.png)
-
 * 本实验中的Notebook将在Azure Machine Learning的工作区中创建AML Pipeline
 * 这个Pipeline会暴露REST API以供调用
 * 在Pipeline创建的过程中，我们会定义本实验将运行的训练脚本`train.py`
