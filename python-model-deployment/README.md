@@ -1,7 +1,4 @@
-# Exercise Instructions
+# 实验六：模型部署到AKS
 
-Open [`deploy_model.ipynb`](deploy_model.ipynb) and follow the instructions in the notebook.
+打开 [`deploy_model.ipynb`](deploy_model.ipynb) 然后根据Notebook中的指导完成实验
 
-# Knowledge Check
-
-To be written.

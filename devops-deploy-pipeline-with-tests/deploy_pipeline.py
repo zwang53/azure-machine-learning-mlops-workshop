@@ -1,6 +1,6 @@
 import os
 import azureml.core
-from azureml.core import Workspace, Experiment, Dataset, RunConfiguration
+from azureml.core import Workspace, Experiment, Dataset, RunConfiguration, Environment
 from azureml.pipeline.core import Pipeline, PipelineData, PipelineParameter
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.data.dataset_consumption_config import DatasetConsumptionConfig
@@ -25,7 +25,9 @@ training_dataset_parameter = PipelineParameter(name='training_dataset', default_
 training_dataset_consumption = DatasetConsumptionConfig('training_dataset', training_dataset_parameter).as_download()
 
 # Load runconfig from earlier exercise and create pipeline
-runconfig = RunConfiguration.load(os.path.join(source_directory, 'runconfig.yml'))
+runconfig = RunConfiguration()
+runconfig.environment = Environment.get(workspace=ws, name='workshop-env')
+
 
 train_step = PythonScriptStep(name='train-step',
                         source_directory=source_directory,
@@ -33,6 +35,7 @@ train_step = PythonScriptStep(name='train-step',
                         arguments=['--data-path', training_dataset_consumption],
                         inputs=[training_dataset_consumption],
                         runconfig=runconfig,
+                        compute_target='cpu-cluster',
                         allow_reuse=False)
 
 steps = [train_step]

@@ -1,14 +1,14 @@
-# Exercise Instructions
+# 实验手册
 
-Open [`parallel_run_step_pipeline.ipynb`](parallel_run_step_pipeline.ipynb) and follow the instructions in the notebook.
+打开 [`parallel_run_step_pipeline.ipynb`](parallel_run_step_pipeline.ipynb) 然后根据Notebook中的指导完成实验。
 
-# Knowledge Check
+# 随堂小测
 
-:question: **Question:** How can we change where `ParallelRunStep` should write its output to?
+:question: **问题:** 如何修改 `ParallelRunStep` 输出的位置？
 <details>
   <summary>:white_check_mark: See solution!</summary>
   
-We can use the `OutputFileDatasetConfig` class. There, we can define the `destination`, which points to a folder on a datastore:
+可以使用`OutputFileDatasetConfig` class. 这里我们可以定义`destination`来指向datastore的地址
 
 ```python
 # Direct path
@@ -25,9 +25,3 @@ output_dataset = OutputFileDatasetConfig(name='batch_results', destination=(data
 ``` 
 </details>
 
-:question: **Question:** How does `ParallelRunStep` know that the minibatch has been successfully processed?
-<details>
-  <summary>:white_check_mark: See solution!</summary>
-  
-The method `def run(file_list)` in your `score_parallel.py` is expected to return an array or Dataframe with the same number of elements/rows as `len(file_list)`.
-</details>

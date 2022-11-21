@@ -1,95 +1,61 @@
-# Exercise Instructions
+# 实验一：使用AML Pipeline实现模型训练
 
-## Prerequisites
+## 预先准备
 
-Before starting with the exercises, make sure that you have the following in place:
+在开始本实验之前，请确保准备好以下环境:
 
-* An Azure Machine Learning workspace
-   * Follow this [tutorial](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-workspace#create-a-workspace), no need to configure the networking section!
-* A Compute Instance, running in your workspace (`Standard_D2_v2` is sufficient)
-  * Goto [AML Studio (https://ml.azure.com)](https://ml.azure.com), sign-in, then select `Compute`, then `Compute instance` and click `Create`
-  * Give it any name, select `Standard_D2_v2` as size and hit create - done!
+* 微软机器学习工作区 Azure Machine Learning workspace
+   * 如果您第一次使用微软机器学习服务，请参考此 [入门指南](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-workspace#create-a-workspace), 无需特殊配置网络部分
+* 在工作区中，开启机器学习计算实例 (资源大小可选择`Standard_D2_v2`)
+  * 进入 [AML Studio (https://ml.azure.com)](https://ml.azure.com)
+  - 登录你的账号
+  - 选择`计算 （Compute）`
+  - 选择`计算实例（Compute Instance）`
+  - 点击`创建（Create）`
+  - 填写实例名称，选择 `Standard_D2_v2` 然后创建
 
-## Running this on a Compute Instance (recommended)
+## 开始实验（以下内容均在计算实例中运行）
 
-We recommend to run these exercises on a Compute Instance on Azure Machine Learning. To get started, open Jupyter or JupyterLab on the Compute Instance, select `New --> Terminal` (upper right corner) and clone this repo:
+我们推荐本实验内容在机器学习服务中的计算实例中运行，因为其为运行机器学习项目的标准环境，可减少开发者的环境配置时间，也避免因为环境配置产生冲突。
+
+开始实验，您可以打开`Jupyter` 或者`Jupyter Lab` 然后选择`New --> Terminal` 并克隆本repo:
 
 ```console
-git clone https://github.com/csiebler/azure-machine-learning-mlops-workshop.git
+git clone https://github.com/zwang53/azure-machine-learning-mlops-workshop.git
 cd azure-machine-learning-mlops-workshop/
 ```
 
-Then navigate to the cloned folder in Jupyter, and open [`single_step_pipeline.ipynb`](single_step_pipeline.ipynb) from this exercise. In case you're asked for a kernel, please use the `Python 3.6 - AzureML` kernel that comes with the Compute Instance.
+然后在Jupyter中导航到克隆的文件目录，打开 [`single_step_pipeline.ipynb`](single_step_pipeline.ipynb) . 请在Jupyter中选择并设置kernal为 `Python 3.8 - AzureML` 
 
-## Running this on your own machine
 
-1. Provision an Azure Machine Learning Workspace in Azure
-1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-1. Login to your Azure subscription via `az login`
-1. Make sure you are in the correct subscription (the one of your workspace):
-    * `az account list` lists all your subscriptions
-    * `az account set -s '<SUBSCRIPTION_ID or NAME>'` sets the default one that the CLI should use
-1. Install the Azure Machine Learning CLI extensive via `az extension add -n azure-cli-ml`
-1. Clone this repo via `git clone https://github.com/csiebler/azure-machine-learning-mlops-workshop.git`
-1. Navigate into the repo `cd azure-machine-learning-mlops-workshop/`
-1. Attach the whole repo to your workspace via `az ml folder attach -w <YOUR WORKSPACE NAME> -g <YOUR RESOURCE GROUP>`
-1. Fire up your favorite notebook experience and get started!
 
-## Quick explanation
+## 敲黑板
 
 ![Pipeline With Testing Drawing](../media/pipeline_overview.png)
 
-* Our notebook creates the AzureML pipeline inside the workspace
-* This pipeline exposes a REST API through which it can be invoked
-* During pipeline creation, we define what scripts it should run (here it's just `train.py`)
-* We also specify in which AzureML Environment it should run (this defines the runtime environment our script will run in)
-* Our pipeline is parameterized so we can pass in other datasets if desired (e.g., for retraining with a new dataset)
-* Our pipeline runs on a compute cluster (on-demand spun up when the pipeline is triggered)
-* Our pipeline might output data (e.g., during batch scoring) or registers a model (e.g., during training) - this will be covered in the subsequent examples
+* 本实验中的Notebook将在Azure Machine Learning的工作区中创建AML Pipeline
+* 这个Pipeline会暴露REST API以供调用
+* 在Pipeline创建的过程中，我们会定义本实验将运行的训练脚本`train.py`
+* 在Pipeline中我们会定义此次模型训练依赖的环境
+* 在Pipeline中我们可以选定要使用的数据集，这样参数化的设置使得我们随时可以修改或使用新的数据集进行训练（比如有新的数据需要做retrain）
+* 此Pipeline会运行在指定的计算集群上 (该集群是在pipeline运行时才会被启用的)
+* 此实验会输出一些数据或者注册一个模型，这些将在后续的实验中被使用
 
-# Knowledge Check
 
-:question: **Question:** From where does `train_step = PythonScriptStep(name="train-step", ...)` know which Python dependencies to use?
+# 随堂小测
+
+:question: **问题1:** `train_step = PythonScriptStep(name="train-step", ...)` 在哪里设置相关的Python依赖?
 <details>
   <summary>:white_check_mark: See solution!</summary>
 
-It uses the AML environment `workshop-env` which we created in the first step. This environment was created using the `conda.yml`. We could have defined all this in Python, but having the conda enviroment in a separate file, allows us to easier test this locally, e.g., by using:
+实验中通过在Notebook中创建的AML environment `workshop-env`来定义python相关依赖。该环境加载了一个`conda.yml`，这里定义了所有python的依赖库
 
-```
-conda env create -f conda.yml
-python train.py --data-path ../data-training
-``` 
 </details>
 
-:question: **Question:** How can we make a compute cluster scale down quicker/slower?
+:question: **问题2:** 在哪里如何配置计算集群，使得它能够更快/慢的响应集群缩放?
 <details>
   <summary>:white_check_mark: See solution!</summary>
 
-We can adapt `idle_seconds_before_scaledown=3600`, which defines the idle time until the cluster scales down to 0 nodes.
+我们可以通过设置如下参数 `idle_seconds_before_scaledown=3600`, 来自动缩放时等待的空闲时间。
 </details>
 
-:question: **Question:** From where does `ws = Workspace.from_config()` how to which workspace it needs to connect?
-<details>
-  <summary>:white_check_mark: See solution!</summary>
-
-The call `Workspace.from_config()` has the following behaviour:
-* Inside a Compute Instance, it resolves to the workspace of the current instance
-* If a `config.json` file is present, it loads the workspace reference from there (you can download this file from the Studio UI, by clicking the book icon on the upper right):
-
-```json
-{
-    "subscription_id": "*****",
-    "resource_group": "aml-mlops-workshop",
-    "workspace_name": "aml-mlops-workshop"
-}
-```
-* Use the az CLI to connect to the workspace and use the workspace attached to via `az ml folder attach -g <resource group> -w <workspace name>`
-</details>
-
-:question: **Question:** What is the difference between `PublishedPipeline` and `PipelineEndpoint`?
-<details>
-  <summary>:white_check_mark: See solution!</summary>
-
-* [`PublishedPipeline`](https://docs.microsoft.com/en-us/python/api/azureml-pipeline-core/azureml.pipeline.core.graph.publishedpipeline?view=azure-ml-py) allows to publish a pipeline as a RESTful API endpoint, from which it can be invoked. Each `PublishedPipeline` will have a new URL endpoint.
-* [`PipelineEndpoint`](https://docs.microsoft.com/en-us/python/api/azureml-pipeline-core/azureml.pipeline.core.pipelineendpoint?view=azure-ml-py) allows to "hide" multiple `PublishedPipeline`s behind a single URL and routes the request to a specific default version. This enables to continously update the `PipelineEndpoint` with new `PublishedPipeline`s while the URL stays the same. Hence, the consumer will not notice that the pipeline got "swapped out", "replaced" or "changed". This is very helpful when we want to test pipelines before we release or hand them over to the pipeline consumer.
-</details>

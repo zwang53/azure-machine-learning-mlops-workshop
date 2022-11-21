@@ -1,38 +1,28 @@
-# azure-machine-learning-mlops-workshop
+# Azure Machine Learning in a Day - MLOps
 
-A workshop for doing MLOps on Azure Machine Learning.
+本次实验旨在通过一天的动手实践，帮助大家理解MLOps，并基于微软机器学习服务开展机器学习项目。
 
-## Theoretical Part
+## 实验目标
 
 **Goal:**
-* Understand basics around MLOps
-* Understand how Azure Machine Learning can help you to build MLOps pipelines
-* Experience hands-on for the key concepts (AML pipelines, AZ ML CLI, etc.) to further deepen the understanding
-* Understand what is important to a good folder/project layout, what should be in your git repo, how to deal with notebooks, do versioning, etc.
+* 基于微软机器学习实现基本的机器学习项目
+* 理解MLOps的基本概念和使用方法
+* 学习如何使用微软机器学习服务来实现MLOps
+* 重点针对AML Pipeline做丰富的联系
 
-**Furthermore this workshop covers:**
-* Overview of when to use one model and when to use many models
-* Deployment of models for real-time scoring vs. batch scoring
 
-## Hands-On Parts
+## 动手实践指导
 
-:pushpin: Please follow the hands-on exercise in the proposed order, as they build on each other.
+:pushpin:  由于实验前后有依赖，请根据以下顺序操作本实验。
 
 * AML Pipelines
-  * :weight_lifting: Exercise - Single-step pipeline - [`pipelines-single-training-step`](pipelines-single-training-step/)
-  * :weight_lifting: Exercise - Multi-step pipeline with parameters - [`pipelines-multi-step-pipeline`](pipelines-multi-step-pipeline/)
-  * :weight_lifting: Exercise - ParallelRunStep pipeline for batch scoring - [`pipelines-parallel-run-step`](pipelines-parallel-run-step/)
-  * :weight_lifting: Exercise - Hyperparametertuning pipeline - [`pipelines-hyperdrive-step`](pipelines-hyperdrive-step/)
-  * :weight_lifting: Exercise - Multi-step pipeline with R code - [`pipelines-with-r`](pipelines-with-r/)
-* MLOps on Azure DevOps
-  * :weight_lifting_woman: Exercise - Deploy AML pipeline as Published Endpoint - [`devops-deploy-simple-pipeline`](devops-deploy-simple-pipeline/)
-  * :weight_lifting_woman: Exercise - Deploy AML pipeline as Published Endpoint, automatically test it and then add it to a Pipeline Endpoint - [`devops-deploy-pipeline-with-tests`](devops-deploy-pipeline-with-tests/)
-* Model Deployment using Python
-  * :weight_lifting_woman: Exercise - Deploy a trained model to AKS using the Python SDK - [`python-model-deployment`](python-model-deployment/)
-* Model Training & Deployment using CLI
-  * :weight_lifting_woman: Exercise - Train a model using the AML CLI (mlflow option included) - [`cli-training`](cli-training/)
-  * :weight_lifting_woman: Exercise - Deploy a model to ACI and AKS using the AML CLI - [`cli-deployment`](cli-deployment/)
-  * :weight_lifting_woman: Exercise - Train a R model using the AML CLI - [`cli-with-r`](cli-with-r/)
+  * :weight_lifting: 实验一 Single-step pipeline - [`pipelines-single-training-step`](pipelines-single-training-step/)
+  * :weight_lifting: 实验二 - Multi-step pipeline with parameters - [`pipelines-multi-step-pipeline`](pipelines-multi-step-pipeline/)
+  * :weight_lifting: 实验三 - ParallelRunStep pipeline for batch scoring - [`pipelines-parallel-run-step`](pipelines-parallel-run-step/)
 
-**Words of caution:**
-The hands-on exercises do not fully embrace concepts like DRY (don't repeat yourself) or other best pratices when it comes to coding standards. Feel free to use them for understanding the concepts, but don't blindly copy and paste them to production.
+* MLOps on Azure DevOps
+  * :weight_lifting_woman: 实验四 - Deploy AML pipeline as Published Endpoint - [`devops-deploy-simple-pipeline`](devops-deploy-simple-pipeline/)
+  * :weight_lifting_woman: 实验五 - Deploy AML pipeline as Published Endpoint, automatically test it and then add it to a Pipeline Endpoint - [`devops-deploy-pipeline-with-tests`](devops-deploy-pipeline-with-tests/)
+* Model Deployment using Python
+  * :weight_lifting_woman: 实验六 - Deploy a trained model to AKS using the Python SDK - [`python-model-deployment`](python-model-deployment/)
+
