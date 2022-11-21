@@ -16,7 +16,7 @@
   variables:
     resourcegroup: 'aml-mlops-workshop' # 替换成你的AML资源所在的的资源组
     workspace: 'aml-mlops-workshop' # 替换成你的AML工作区的名称
-    aml_compute_target: 'cpu-cluster'# 可以不做修改
+    aml_compute_target: 'cpu-cluster' # 可以不做修改
   ```
 1. 仔细浏览本实验中运行的YAML文件，此次的CI/CD pipeline将完成以下八个步骤（前五个跟前面的实验相同）：
     * 设置build agent上的Python版本

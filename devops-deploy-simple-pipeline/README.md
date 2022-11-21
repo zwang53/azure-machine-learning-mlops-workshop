@@ -42,7 +42,7 @@
   variables:
     resourcegroup: 'aml-mlops-workshop' # 替换成你的 resource group (同之前建立Service Connection一样)
     workspace: 'aml-mlops-workshop' # 替换你的工作区名称 (同之前建立Service Connection一样)
-    aml_compute_target: 'cpu-cluster'# 可以不做修改
+    aml_compute_target: 'cpu-cluster' # 可以不做修改
   ```
 1. 仔细浏览YAML文件，本次实验的CI/CD pipeline将完成以下五个步骤：
     * 设置build agent上的Python版本
