@@ -1,4 +1,4 @@
-# 实验四：通过Azure DevOps 部署pipeline
+# 实验三：通过Azure DevOps 部署pipeline
 
 本实验将部署下图所示的DevOps Pipeline:
 ![Simple Pipeline Drawing](../media/simple_pipeline.png)

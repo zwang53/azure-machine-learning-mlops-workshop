@@ -1,6 +1,6 @@
-# 实验手册
+# 实验二：使用ParallelRunStep实现并行处理
 
-打开 [`parallel_run_step_pipeline.ipynb`](parallel_run_step_pipeline.ipynb) 然后根据Notebook中的指导完成实验。
+本实验旨在学习使用ParallelRunStep实现大规模数据的并行处理或多模型的并行处理。打开 [`parallel_run_step_pipeline.ipynb`](parallel_run_step_pipeline.ipynb) 然后根据Notebook中的指导完成实验。
 
 # 随堂小测
 

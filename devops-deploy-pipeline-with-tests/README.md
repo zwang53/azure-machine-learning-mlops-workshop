@@ -1,11 +1,11 @@
-# Exercise Instructions
+# 实验四：使用Azure DevOps 实现实验的部署和测试
 
 在本实验中，我们将部署如下场景的DevOps Pipeline:
 ![Pipeline With Testing Drawing](../media/pipline_with_testing.png)
 
 ## 导入 `deploy-simple-pipeline-with-tests.yml` pipeline
 
-实验五中的DevOps pipeline将实现自动的部署和测试之前实验一中使用的ML training pipeline. 
+本实验中的DevOps pipeline将实现自动的部署和测试之前实验一中使用的ML training pipeline. 
 
 1. 选择 `Pipelines --> Pipelines` 然后选择 `New pipeline`
 1. 选择`Azure Repos Git`
